@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div style="border: 1px darkblue solid">
-        {{ my_num }}
-    </div>
-    <div style="border: 1px darkseagreen solid">
-        {{ my_str }}
-    </div>
-    <div>
-        <a href="{% url 'other' %}">Other page</a>
-    </div>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="padding: 20px; background-color: fuchsia"> Extended template index!</div>
+<a href="{% url 'first' %}">To the first page</a>
+{% include 'add.html' %}
+{% endblock %}
