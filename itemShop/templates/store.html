@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div style="padding: 20px; background-color: chocolate"> This is store... lol</div>
+{% for product in products %}
+    <div>
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Цена: {{ product.price }}</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="product" value="{{ product.id }}">
+            <input type="submit" value="Купить">
+        </form>
+    </div>
+{% endfor %}
+<div style="background-color: rgb(248, 150, 150);">
+    
+    <p>Привет, {{ user.username }}!</p>
+    <p>Ваши бабки: {{ user.wallet.balance }}</p>
+</div>
 {% endblock %}

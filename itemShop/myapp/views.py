@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
-from .models import Product, Wallet
+from .models import Product, Wallet, Purchase, Return
 
 
 def logIn(request):
@@ -22,7 +22,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            Wallet.objects.create(user=user, balance=0)
+            Wallet.objects.create(user=user, balance=10)
             return redirect('store')
     else:
         form = UserCreationForm()
