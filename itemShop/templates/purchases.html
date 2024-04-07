@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Совершенные покупки</h1>
+<ul>
+    {% for purchase in purchases %}
+        <li>{{ purchase.product.name }} - {{ purchase.quantity }} шт.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'store' %}">вернуться</a>
+{% endblock %}

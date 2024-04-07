@@ -5,9 +5,8 @@ from django.utils import timezone
 class Wallet(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     balance = models.DecimalField(max_digits=10, decimal_places=2)
-
-
     
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200)
@@ -21,6 +20,8 @@ class Purchase(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     timestamp = models.DateTimeField(default=timezone.now)
+
+    
 
 class Return(models.Model):
     purchase = models.OneToOneField(Purchase, on_delete=models.CASCADE)

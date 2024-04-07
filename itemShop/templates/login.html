@@ -3,7 +3,7 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
     <button type="submit">Join</button>
 </form>
 <a href="{% url 'register' %}">Or join to registration</a>

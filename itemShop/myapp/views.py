@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from .models import Product, Wallet, Purchase, Return
 
 
+
 def logIn(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -28,19 +29,32 @@ def register(request):
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
 def store(request):
     if request.method == 'POST':
         product_id = request.POST.get('product')
-        product = Product.objects.get(id=product_id)
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            # Обработка случая, когда продукт не существует
+            return redirect('failure')
+
         wallet = Wallet.objects.get(user=request.user)
-        if wallet.balance >= product.price:
+        if wallet.balance >= product.price and product.stock >= 1:
+            product.stock -= 1
+            product.save() 
             wallet.balance -= product.price
-            wallet.save()
-            # Здесь можно добавить логику для обработки покупки товара
-            return redirect('success')
+            wallet.save() 
+            Purchase.objects.create(user=request.user, product=product, quantity=1)
+            
+            return redirect('purchases')
         else:
             return redirect('failure')
     else:
         products = Product.objects.all()
         return render(request, 'store.html', {'products': products})
+    
+
+def purchases_list(request):
+    purchases = Purchase.objects.filter(user=request.user)
+    context = {'purchases': purchases}
+    return render(request, 'purchases.html', context)

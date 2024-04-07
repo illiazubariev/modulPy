@@ -6,6 +6,7 @@
         <h2>{{ product.name }}</h2>
         <p>{{ product.description }}</p>
         <p>Цена: {{ product.price }}</p>
+        <p>Осталось на складе: {{ product.stock }} шт.</p>
         <form method="post">
             {% csrf_token %}
             <input type="hidden" name="product" value="{{ product.id }}">
@@ -16,6 +17,9 @@
 <div style="background-color: rgb(248, 150, 150);">
     
     <p>Привет, {{ user.username }}!</p>
-    <p>Ваши бабки: {{ user.wallet.balance }}</p>
+    <p>Ваши деньги: {{ user.wallet.balance }}</p>
+    <a href="{% url 'purchases' %}">корзина</a> <br>
+    <a href="{% url 'logout' %}">logout</a>
 </div>
+
 {% endblock %}
