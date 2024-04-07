@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-
-h1 ОШИБКА!
+{% block content %}
+<h1>ОШИБКА!</h1>
 <p>проверте баланс кошелька или наличие товара на складе</p>
 <a href="{% url 'store' %}">вернуться</a>
-{% block content %}
 {% endblock %}

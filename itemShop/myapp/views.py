@@ -45,7 +45,6 @@ def store(request):
             wallet.balance -= product.price
             wallet.save() 
             Purchase.objects.create(user=request.user, product=product, quantity=1)
-            
             return redirect('purchases')
         else:
             return redirect('failure')
@@ -55,6 +54,13 @@ def store(request):
     
 
 def purchases_list(request):
-    purchases = Purchase.objects.filter(user=request.user)
-    context = {'purchases': purchases}
-    return render(request, 'purchases.html', context)
+    if request.method == 'GET':
+       purchases = Purchase.objects.filter(user=request.user)
+       context = {'purchases': purchases}
+       return render(request, 'purchases.html', context)
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
+
+def failure_alert(request):
+    return render(request, 'failure.html')
